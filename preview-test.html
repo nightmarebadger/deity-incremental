@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    button {
+      background: #4a7bff;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #3a6bef;
+    }
+    .results {
+      margin-top: 15px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Preview Asset Path Test</h1>
+  <p>This page helps verify that assets are loading correctly with the proper base path.</p>
+
+  <div class="container">
+    <h2>Test Asset Paths</h2>
+    <button id="testBtn">Test Asset Paths</button>
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    document.getElementById('testBtn').addEventListener('click', async () => {
+      const results = document.getElementById('results');
+
+      results.textContent = 'Testing asset paths...\n\n';
+
+      // Check if we can load a sample asset
+      try {
+        const iconResponse = await fetch('./icon.svg');
+        results.textContent += `Icon fetch status: ${iconResponse.status} ${iconResponse.statusText}\n`;
+      } catch (error) {
+        results.textContent += `Error loading icon: ${error.message}\n`;
+      }
+
+      // Get base path information
+      results.textContent += `\nDocument base URL: ${document.baseURI}\n`;
+      results.textContent += `Window location: ${window.location.href}\n`;
+
+      // Print environment info
+      results.textContent += `\nBase path from meta: ${document.querySelector('meta[name="base-path"]')?.content || 'Not found'}\n`;
+      results.textContent += `\nTest completed at: ${new Date().toLocaleTimeString()}\n`;
+    });
+  </script>
+</body>
+</html>
